@@ -1,38 +1,43 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.3.71'
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'org.jetbrains.kotlin.kapt' version '1.4.10'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
-group = 'net.im45.bot'
-version = '0.1.0'
+group 'net.im45.bot'
+version '0.1.0'
 
 repositories {
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     maven { url 'https://mirrors.huaweicloud.com/repository/maven' }
     mavenCentral()
     jcenter()
 }
 
-def miraiCoreVersion = "1.0.1"
-def miraiConsoleVersion = "0.5.2"
-
 dependencies {
-    compileOnly 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    compileOnly "net.mamoe:mirai-core:$miraiCoreVersion"
-    compileOnly "net.mamoe:mirai-console:$miraiConsoleVersion"
+    def miraiCore = '1.3.2'
+    def miraiConsole = '1.0-RC-dev-29'
+    def autoService = '1.0-rc7'
 
-    testImplementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    testImplementation "net.mamoe:mirai-core:$miraiCoreVersion"
-    testImplementation "net.mamoe:mirai-console:$miraiConsoleVersion"
+    kapt "com.google.auto.service:auto-service:$autoService"
+
+    compileOnly "net.mamoe:mirai-core:$miraiCore"
+    compileOnly "net.mamoe:mirai-console:$miraiConsole"
+    compileOnly "com.google.auto.service:auto-service:$autoService"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib"
+
+    testImplementation "net.mamoe:mirai-core:$miraiCore"
+    testImplementation "net.mamoe:mirai-console:$miraiConsole"
+    testImplementation "net.mamoe:mirai-console-pure:$miraiConsole"
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib"
 }
 
 compileKotlin {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11
 }
+
 compileTestKotlin {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_11
